@@ -1,27 +1,57 @@
-# MockServiceAngular
+# Mock Service Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
+Mock services like HTTP requests.
 
-## Development server
+```
+-------------------
+# hello.service.ts
+-------------------
+@Injectable({
+  providedIn: 'root',
+})
+export class HelloService {
+  constructor() {}
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+  getHelloWorld() {
+    return 'Hello world Aissam !';
+  }
+}
+```
 
-## Code scaffolding
+```
+------------------------
+# app.component.spec.ts
+------------------------
+// Spec Group
+describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  // Spy service
+  let helloServiceSpy: jasmine.SpyObj<HelloService>;
 
-## Build
+  // Arrange phase (setup)
+  beforeEach(async () => {
+    helloServiceSpy = jasmine.createSpyObj('HelloService', ['getHelloWorld']);
+    helloServiceSpy.getHelloWorld.and.returnValue('Mocked hello !');
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    await TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      providers: [{ provide: HelloService, useValue: helloServiceSpy }],
+    }).compileComponents();
 
-## Running unit tests
+    // Create the component fixture that allows to inspect the component
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    fixture.detectChanges();
+  });
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  // Unit Test
+  it('#getHelloWorld should return real value from the real service', () => {
+    expect(fixture.componentInstance.helloService.getHelloWorld()).toBe(
+      'Mocked hello !'
+    );
+  });
+});
+```

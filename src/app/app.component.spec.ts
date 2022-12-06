@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HelloService } from './service/hello.service';
 
+// SPEC GROUP
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -23,9 +24,11 @@ describe('AppComponent', () => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
 
+    // Data binding
     fixture.detectChanges();
   });
 
+  // UNIT TEST
   it('#getHelloWorld should return real value from the real service', () => {
     expect(fixture.componentInstance.helloService.getHelloWorld()).toBe(
       'Mocked hello !'
