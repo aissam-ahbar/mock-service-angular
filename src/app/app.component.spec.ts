@@ -3,7 +3,6 @@ import { AppComponent } from './app.component';
 import { HelloService } from './service/hello.service';
 
 describe('AppComponent', () => {
-  // Component Under Test
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
@@ -19,6 +18,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       providers: [{ provide: HelloService, useValue: helloServiceSpy }],
     }).compileComponents();
+
     fixture.detectChanges();
   });
 
