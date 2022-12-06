@@ -31,7 +31,6 @@ describe('AppComponent', () => {
   // UNIT TEST
   it('#getHelloWorld should return real value from the real service', () => {
     expect(component.helloService.getHelloWorld()).toBe('Mocked hello !');
-
     expect(helloServiceSpy.getHelloWorld.calls.count())
       .withContext('one call')
       .toBe(1);
